@@ -4,13 +4,13 @@ import {
     PostEditorContainer,
     PostEditorWrapper,
     PostButton,
-} from "./PostEditor.styles";
+} from "./PostUpdate.styles";
 import TextEditor from "./TextEditor";
 import axiosInstance from "../../../apis/axiosInstance";
 import { GoChevronDown } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 
-function PostEditor() {
+function PostUpdate() {
     const [value, setValue] = useState("");
     const [category, setCategory] = useState("");
     const [title, setTitle] = useState("");
@@ -191,4 +191,4 @@ function PostEditor() {
     );
 }
 
-export default PostEditor;
+export default PostUpdate;

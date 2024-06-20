@@ -29,6 +29,7 @@ import UserProfile from "../pages/ProfilePage/UserProfile/UserProfile";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 import TagPage from "../pages/TagPage/TagPage";
 import SearchPage from "../pages/SearchPage/SearchPage";
+import PostUpdate from "../pages/BoardPage/PostUpdate/PostUpdate";
 
 function AppRoutes() {
     return (
@@ -64,6 +65,7 @@ function AppRoutes() {
                         <Route path="/qna" element={<QnAPage />} />
                         <Route path="/community" element={<CommunityPage />} />
                         <Route path="/post/create" element={<PostEditor />} />
+                        <Route path="/post/update" element={<PostUpdate />} />
                         <Route
                             path="/:category/:boardNo"
                             element={<PostDetail />}

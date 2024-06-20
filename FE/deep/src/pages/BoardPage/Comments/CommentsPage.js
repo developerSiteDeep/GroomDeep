@@ -134,15 +134,19 @@ function CommentsPage({ boardNo }) {
     };
 
     const handleDeleteComment = (e, replyNo) => {
-        axiosInstance
-            .delete(`/deep/board/reply-delete?replyNo=${replyNo}`)
-            .then((response) => {
-                alert("댓글이 삭제 되었습니다.");
-            })
-            .catch((error) => {
-                console.log(error);
-                alert("댓글 삭제에 실패했습니다.");
-            });
+        if (window.confirm("댓글을 삭제하시겠습니까?")) {
+            axiosInstance
+                .delete(`/deep/board/reply-delete?replyNo=${replyNo}`)
+                .then((response) => {
+                    alert("댓글이 삭제 되었습니다.");
+                })
+                .catch((error) => {
+                    console.log(error);
+                    alert("댓글 삭제에 실패했습니다.");
+                });
+        } else {
+            return;
+        }
     };
 
     return (
