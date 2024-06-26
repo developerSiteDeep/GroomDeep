@@ -14,6 +14,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import CommentsPage from "../Comments/CommentsPage";
 import Loading from "../../../components/Loading/Loading";
+import PostUpdate from "../PostUpdate/PostUpdate";
 
 function PostDetail() {
     const [loading, setLoading] = useState(true);
@@ -132,7 +133,9 @@ function PostDetail() {
         setIsPostMenuOpen(!isPostMenuOpen);
     };
 
-    const handleModifyPost = () => {};
+    const handleModifyPost = (e, category, boardNo) => {
+        navigate(`/post/update/${category}/${boardNo}`);
+    };
 
     const handleDeletePost = () => {
         if (window.confirm("게시글을 삭제하시겠습니까?")) {
@@ -226,7 +229,13 @@ function PostDetail() {
                                         >
                                             <li
                                                 className="modify"
-                                                onMouseDown={handleModifyPost}
+                                                onMouseDown={(e) =>
+                                                    handleModifyPost(
+                                                        e,
+                                                        category,
+                                                        boardNo
+                                                    )
+                                                }
                                             >
                                                 수정하기
                                             </li>

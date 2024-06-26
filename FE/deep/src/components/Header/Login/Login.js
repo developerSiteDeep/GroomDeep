@@ -27,20 +27,20 @@ function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        axiosInstance
-            .get("/deep/connectAlert", {
-                params: { memberID: member.memberID },
-            })
-            .then((response) => {
-                console.log(response);
-                console.log("알람");
-                setAlarm(response);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
+    // useEffect(() => {
+    //     axiosInstance
+    //         .get("/deep/connectAlert", {
+    //             params: { memberID: member.memberID },
+    //         })
+    //         .then((response) => {
+    //             console.log(response);
+    //             console.log("알람");
+    //             setAlarm(response);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         });
+    // }, []);s
 
     const handleClickProfile = () => {
         setIsProfileOpen(!isProfileOpen);
@@ -121,7 +121,7 @@ function Login() {
                             (isAlarmOpen ? "" : "hidden")
                         }
                     >
-                        <li className="user_alarm">
+                        {/* <li className="user_alarm">
                             <span>ELK 적용해보신 분 계신가요?</span> 글에 새로운
                             댓글이 추가되었습니다.
                         </li>
@@ -150,7 +150,7 @@ function Login() {
                         <li className="user_alarm">
                             <span>ELK 적용해보신 분 계신가요?</span> 글에 새로운
                             댓글이 추가되었습니다.
-                        </li>
+                        </li> */}
                     </ul>
                 </ContentsContainer>
                 <div

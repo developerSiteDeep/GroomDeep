@@ -99,8 +99,11 @@ function PostEditor() {
     };
 
     const cancelCreatePost = () => {
-        alert("변경사항이 저장되지 않을 수 있습니다.");
-        navigate(-1);
+        if (window.confirm("변경사항이 저장되지 않을 수 있습니다.")) {
+            navigate(-1);
+        } else {
+            return;
+        }
     };
 
     return (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Input from "../../../components/Input/Input";
 import {
     PostEditorContainer,
@@ -8,7 +8,7 @@ import {
 import TextEditor from "./TextEditor";
 import axiosInstance from "../../../apis/axiosInstance";
 import { GoChevronDown } from "react-icons/go";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function PostUpdate() {
     const [value, setValue] = useState("");
@@ -24,6 +24,37 @@ function PostUpdate() {
     const [isDisable, setIsDisable] = useState(false);
 
     const navigate = useNavigate();
+
+    const location = useLocation();
+
+    const boardNo = location.pathname.split("/")[4];
+
+    useMemo(() => {
+        const boardCategory = location.pathname.split("/")[3];
+
+        setCategory(boardCategory);
+
+        axiosInstance
+            .post("/deep/board/detail", {
+                boardNo: boardNo,
+            })
+            .then((response) => {
+                const data = response.data;
+
+                setTitle(data.title);
+                // setContents(data.content);
+                setTags(data.tag);
+            })
+            .catch((error) => {
+                console.log(error);
+                alert("게시물이 존재하지 않습니다.");
+                navigate("/home");
+            });
+
+        if (boardCategory === "skill") setValue("기술 트렌드");
+        else if (boardCategory === "qna") setValue("QnA");
+        else if (boardCategory === "community") setValue("커뮤니티");
+    }, []);
 
     const handleChangeTitle = (e) => {
         setTitle(e.target.value);
@@ -67,7 +98,7 @@ function PostUpdate() {
         setTags(remove);
     };
 
-    const createPost = () => {
+    const updatePost = () => {
         if (category === "") {
             alert("카테고리를 선택해 주세요.");
         } else if (title === "") {
@@ -78,6 +109,7 @@ function PostUpdate() {
             setIsDisable(true);
 
             const contentsInfo = {
+                boardNo: boardNo,
                 title: title,
                 category: category,
                 content: contents,
@@ -85,9 +117,9 @@ function PostUpdate() {
             };
 
             axiosInstance
-                .post("/deep/board/write", contentsInfo)
+                .put("/deep/board/modify", contentsInfo)
                 .then((response) => {
-                    alert("게시글 작성이 완료되었습니다.");
+                    alert("게시글 수정이 완료되었습니다.");
                     navigate(`/${category}/${response.data.boardNo}`);
                 })
                 .catch((error) => {
@@ -99,8 +131,11 @@ function PostUpdate() {
     };
 
     const cancelCreatePost = () => {
-        alert("변경사항이 저장되지 않을 수 있습니다.");
-        navigate(-1);
+        if (window.confirm("변경사항이 저장되지 않을 수 있습니다.")) {
+            navigate(-1);
+        } else {
+            return;
+        }
     };
 
     return (
@@ -182,8 +217,8 @@ function PostUpdate() {
                     <PostButton inverted onClick={cancelCreatePost}>
                         취소
                     </PostButton>
-                    <PostButton onClick={createPost} disabled={isDisable}>
-                        작성하기
+                    <PostButton onClick={updatePost} disabled={isDisable}>
+                        수정하기
                     </PostButton>
                 </div>
             </PostEditorContainer>

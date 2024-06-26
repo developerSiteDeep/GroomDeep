@@ -5,11 +5,29 @@ import "@toast-ui/editor/dist/i18n/ko-kr";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 import "prismjs/themes/prism.css";
 import Prism from "prismjs";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import axiosInstance from "../../../apis/axiosInstance";
+import { useLocation } from "react-router-dom";
 
 function TextEditor(props) {
+    const location = useLocation();
+
+    const boardNo = location.pathname.split("/")[4];
+
+    useMemo(() => {
+        axiosInstance
+            .post("/deep/board/detail", {
+                boardNo: boardNo,
+            })
+            .then((response) => {
+                editorRef.current.getInstance().setHTML(response.data.content);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
     const editorRef = useRef();
 
     const toolbar = [

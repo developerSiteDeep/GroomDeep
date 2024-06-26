@@ -10,7 +10,7 @@ import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import axiosInstance from "../../../apis/axiosInstance";
 
 function TextEditor(props) {
-    const editorRef = useRef();
+    const editorRef = useRef(null);
 
     const toolbar = [
         ["bold", "italic", "strike"],
