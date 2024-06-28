@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "../../../apis/axiosInstance";
 import { saveMemberInfo } from "../../../store/memberStore";
 import { FaCirclePlus } from "react-icons/fa6";
+import { AiOutlineDelete } from "react-icons/ai";
 
 function ProfileEdit() {
     const [nickName, setNickName] = useState("");
@@ -15,6 +16,7 @@ function ProfileEdit() {
     const [imgFile, setImgFile] = useState(null);
     const [imgFileSize, setImgFileSize] = useState(0);
     const [profileImg, setProfileImg] = useState("");
+    const [disabled, setDisabled] = useState(true);
     const [isNickName, setIsNickName] = useState(false);
     const [isIntroduce, setIsIntroduce] = useState(false);
     const [isComplete, setIsComplete] = useState(false);
@@ -39,7 +41,7 @@ function ProfileEdit() {
     const handleCheckNickName = (e) => {
         setNickName(e.target.value);
 
-        const regex = /^[a-zA-Z가-힣0-9?!^]{2,}$/;
+        const regex = /^[a-zA-Z가-힣0-9!^]{2,}$/;
 
         if (regex.test(e.target.value)) {
             setIsNickName(true);
@@ -70,9 +72,20 @@ function ProfileEdit() {
         setImgFileSize(e.target.files[0].size);
     };
 
+    const handleProfileReset = () => {
+        if (window.confirm("프로필 사진을 초기화 하시겠습니까?")) {
+            setProfileImg("");
+        } else {
+            return;
+        }
+    };
+
     const handleCancel = () => {
-        alert("변경사항이 저장되지 않을 수 있습니다.");
-        navigate(-1);
+        if (window.confirm("변경사항이 저장되지 않을 수 있습니다.")) {
+            navigate(-1);
+        } else {
+            return;
+        }
     };
 
     const profileEdit = () => {
@@ -156,6 +169,16 @@ function ProfileEdit() {
                         className="user_profile_upload"
                         onChange={handleImgUpload}
                     />
+                    {profileImg === "" ? (
+                        <></>
+                    ) : (
+                        <div className="profile_img_reset">
+                            <Button inverted onClick={handleProfileReset}>
+                                <AiOutlineDelete />
+                                삭제
+                            </Button>
+                        </div>
+                    )}
                     <div
                         className={
                             "user_nickname_edit " + (!isNickName ? "error" : "")

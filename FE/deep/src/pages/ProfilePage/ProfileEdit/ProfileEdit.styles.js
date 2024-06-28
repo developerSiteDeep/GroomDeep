@@ -17,6 +17,7 @@ export const EditContainer = styled.div`
     border-right: 1px solid #ddd;
 
     .user_profile_edit {
+        position: relative;
         width: 610px;
         margin-top: 50px;
     }
@@ -63,6 +64,29 @@ export const EditContainer = styled.div`
         fill: ${palette.blue[1]};
     }
 
+    .profile_img_reset {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin-top: 50px;
+    }
+
+    .profile_img_reset button {
+        width: 100px;
+        color: ${palette.red[6]};
+    }
+
+    .profile_img_reset button:disabled {
+        background: #eee;
+        color: #aaa;
+    }
+
+    .profile_img_reset svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+    }
+
     .user_profile_upload {
         display: none;
     }
@@ -103,9 +127,6 @@ export const EditContainer = styled.div`
         color: ${palette.red[7]};
         font-size: 1.4rem;
         text-indent: 5px;
-    }
-
-    .user_introduce_edit {
     }
 
     .user_introduce_edit label {

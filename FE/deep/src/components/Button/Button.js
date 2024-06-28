@@ -23,7 +23,7 @@ const buttonStyle = css`
     }
 
     &:disabled {
-        background: #ccc;
+        background: #ddd;
         cursor: default;
     }
 
